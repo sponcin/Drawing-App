@@ -1,0 +1,114 @@
+var currentColor = color(0, 0, 0);
+
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 150;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+    this.onClick = config.onClick || function() {};
+    this.colors = config.currentColor;
+};
+
+Button.prototype.draw = function() {
+    noStroke();
+    fill(this.colors);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(19);
+    textAlign(LEFT, TOP);
+    text(this.label, this.x+7, this.y+this.height - 28);
+    textAlign(LEFT, LEFT);
+};
+
+Button.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+};
+
+Button.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()) {
+        this.onClick();
+    }
+};
+
+var btn1 = new Button({
+    x: 8,
+    y: -21,
+    width: 54,
+    height: 62,
+    currentColor: color(255, 196, 224),
+    colors: currentColor,
+    label: "Pink!",
+    onClick: function() {
+        currentColor = color(255, 196, 224);
+    }
+});
+
+var btn2 = new Button({
+    x: 78,
+    y: -21,
+    width: 54,
+    height: 62,
+    currentColor: color(196, 76, 134),
+    colors: currentColor,
+    label: "Blue!",
+    onClick: function() {
+       currentColor = color(135, 191, 255);
+    }
+});
+
+
+var btn3 = new Button({
+    x: 280,
+    y: 236,
+    label: "Gray!",
+    onClick: function() {
+        currentColor = color(156, 156, 156);
+    }
+});
+
+/*
+1. each button to be looped 2
+2. 
+3. 
+*/
+
+//loop to make each color button
+for (var j = 0; j < 13; j++) {
+    fill(255, 0, 0);
+    text(j, 13, j*30+30);
+    for (var i = 0; i < 12; i++) {
+        }
+}
+    
+//Function to draw my initial (take letter as parameter).
+
+var drawMyLetter = function(){
+    background(255, 255, 255);
+    btn1.draw();
+    btn2.draw();
+    btn3.draw();
+
+};
+
+drawMyLetter("S");
+
+
+//Dragged function to draw on the screen
+mouseDragged = function() {
+    if(mouseX < 280){
+     fill(currentColor);
+     noStroke();
+    ellipse(mouseX, mouseY, 20, 20);
+    strokeWeight(1);
+    }
+};
+
+mouseClicked = function() {
+    btn1.handleMouseClick();
+    btn2.handleMouseClick();
+    btn3.handleMouseClick();
+};
