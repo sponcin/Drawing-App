@@ -1,4 +1,24 @@
-var currentColor = color(0, 0, 0);
+//Global Variables
+var currentColor = color(0, 0, 0); 
+var numColors = 10; //The amount of colors we will have
+
+// Array to store colors
+var colorArray = [
+    color(255, 0, 0), //1 Red
+    color(242, 145, 236), //2 Pink
+    color(255, 162, 0), //3 Orange
+    color(255, 255, 0), //4 Yellow
+    color(108, 217, 112), //5 Light Green
+    color(13, 117, 13), //6 Dark Green
+    color(148, 231, 242), //7 Sky Blue
+    color(0, 85, 255), //8 Dark Blue
+    color(164, 51, 230), //9 Purple
+    color(117, 60, 17), //10 Brown
+    color(255, 255, 255), //11 White
+    color(0, 0, 0), //12 Black
+    ];
+//Empty Array to make the color button instances
+var colorButtons = [];
 
 var Button = function(config) {
     this.x = config.x || 0;
@@ -6,18 +26,22 @@ var Button = function(config) {
     this.width = config.width || 150;
     this.height = config.height || 50;
     this.label = config.label || "Click";
-    this.onClick = config.onClick || function() {};
-    this.colors = config.currentColor;
+    this.fill = config.fill;
+    this.onClick = function() 
+    {
+        currentColor = this.fill;
+    };
 };
 
 Button.prototype.draw = function() {
     noStroke();
-    fill(this.colors);
+    //this.fill will make each button their assigned array color
+    fill(this.fill);
     rect(this.x, this.y, this.width, this.height, 5);
     fill(0, 0, 0);
     textSize(19);
     textAlign(LEFT, TOP);
-    text(this.label, this.x+7, this.y+this.height - 28);
+    //text(this.label, this.x+7, this.y+this.height - 28);
     textAlign(LEFT, LEFT);
 };
 
@@ -33,14 +57,14 @@ Button.prototype.handleMouseClick = function() {
         this.onClick();
     }
 };
-
+/*
 var btn1 = new Button({
     x: 8,
     y: -21,
     width: 54,
     height: 62,
     currentColor: color(255, 196, 224),
-    colors: currentColor,
+    fill: currentColor,
     label: "Pink!",
     onClick: function() {
         currentColor = color(255, 196, 224);
@@ -53,53 +77,62 @@ var btn2 = new Button({
     width: 54,
     height: 62,
     currentColor: color(196, 76, 134),
-    colors: currentColor,
+    fill: currentColor,
     label: "Blue!",
     onClick: function() {
-       currentColor = color(135, 191, 255);
+       currentColor = color(196, 76, 134);
     }
 });
 
 
 var btn3 = new Button({
-    x: 280,
-    y: 236,
+    x: 142,
+    y: -21,
+    width: 54,
+    height: 62,
+    currentColor: color(201, 185, 193),
+    fill: currentColor,
     label: "Gray!",
     onClick: function() {
         currentColor = color(156, 156, 156);
     }
 });
-
-/*
-1. each button to be looped 2
-2. 
-3. 
 */
 
-//loop to make each color button
-for (var j = 0; j < 13; j++) {
-    fill(255, 0, 0);
-    text(j, 13, j*30+30);
-    for (var i = 0; i < 12; i++) {
-        }
-}
-    
-//Function to draw my initial (take letter as parameter).
+// a loop that will push new instances of the button object into the colorButtons array
 
-var drawMyLetter = function(){
-    background(255, 255, 255);
-    btn1.draw();
-    btn2.draw();
-    btn3.draw();
+//a loop that will push new instances of the button object into the colorButtons array
+for( var i = 0; i < numColors; i++)
+{
+    colorButtons.push(
+        new Button (
+            {
+                x:2 + i * 40,
+                y:0,
+                fill: colorArray[i],
+                width: 35,
+                height: 65
+            }
+        )
+    );
+}
+//Function to draw the buttons to the screen
+
+var drawColorButtons = function(){
+    for (var i = 0; i < numColors; i++)
+    {
+        //draw out the array of buttons
+        colorButtons[i].draw();
+    }
 
 };
 
-drawMyLetter("S");
+drawColorButtons();
 
 
 //Dragged function to draw on the screen
 mouseDragged = function() {
-    if(mouseX < 280){
+    if(mouseY > 75){
      fill(currentColor);
      noStroke();
     ellipse(mouseX, mouseY, 20, 20);
@@ -107,8 +140,11 @@ mouseDragged = function() {
     }
 };
 
-mouseClicked = function() {
-    btn1.handleMouseClick();
-    btn2.handleMouseClick();
-    btn3.handleMouseClick();
+mouseClicked = function() 
+{
+    for( var i = 0; i < numColors; i++)
+    {
+        colorButtons[i].handleMouseClick();
+    }
 };
+
