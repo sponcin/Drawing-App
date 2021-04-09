@@ -339,6 +339,8 @@ Crayon.prototype.draw = function() {
     textAlign(LEFT, TOP);
     //text(this.label, this.x+7, this.y+this.height - 28);
     textAlign(LEFT, LEFT);
+    fill(this.fill);
+    triangle(this.x + 15, this.y + 80, this.x + 30, this.y + 64, this.x, this.y + 64);
 };
 
 Crayon.prototype.isMouseInside = function() {
@@ -372,6 +374,40 @@ for( var i = 0; i < numColors; i++)
 
 /*
                             END of Crayon Object Code
+                            START of back, ? and next "buttons"
+*/
+var back = function(){
+     fill(171, 171, 171);
+    rect(4, 376, 49, 20, 5);
+    fill(255, 255, 255);
+    textSize(16);
+    text("back", 11, 392);
+};
+
+var next = function(){
+     fill(171, 171, 171);
+    rect(347, 376, 49, 20, 5);
+    fill(255, 255, 255);
+    textSize(16);
+    text("next", 357, 391);
+};
+
+var gameHelp = function(){
+     fill(171, 171, 171);
+    ellipse(200, 386, 20, 20);
+    fill(255, 255, 255);
+    textSize(16);
+    text("?", 195, 392);
+};
+
+var gameNavigation = function(){
+    back();
+    next();
+    gameHelp();
+};
+
+/*
+                            END of back, ? and next "buttons"
                             START of Functions to draw Scenes
 */
 //scene 0 is splash screen
@@ -394,7 +430,7 @@ var frameX = 100;
 var frameY = 90;
 var frameH = 100;
 var frameW = 100;
-
+//code to draw the frame - not sure if there is a way to draw on top of the white rectangle... if not, I can redo the frame to be made of 4 rectangles so the middle is the background you're drawing on
 var drawingFrame = function(){
     fill(171, 171, 171);
     rect(frameX - 73, frameY, frameH + 250, frameW + 182);
@@ -402,9 +438,6 @@ var drawingFrame = function(){
     rect(frameX - 58, frameY + 16, frameH + 220, frameW + 150);
     fill(255, 255, 255);
     rect(frameX - 45, frameY + 27, frameH + 194, frameW + 126);
-    
-   // backButton.draw();
-
 };
 //scene 1 is options
 var drawOptions = function(){
@@ -429,6 +462,7 @@ var drawFreeDraw = function(){
     drawColorCrayons();
     drawingFrame();
     currentScene = 4;
+    gameNavigation();
 };
 //scene 3 is cake
 var drawCakeDecorating = function(){
@@ -438,6 +472,7 @@ var drawCakeDecorating = function(){
     drawingFrame();
     currentScene = 3;
     drawColorCrayons();
+    gameNavigation();
 };
 //scene 6 is house
 var drawPickAndFill = function(){
@@ -447,6 +482,7 @@ var drawPickAndFill = function(){
     drawingFrame();
     currentScene = 6;
     drawColorCrayons();
+    gameNavigation();
 };
 //scene 5 is Fruit
 var drawFreshFruit = function(){
@@ -456,6 +492,7 @@ var drawFreshFruit = function(){
     drawingFrame();
     currentScene = 5;
     drawColorCrayons();
+    gameNavigation();
 };
 /*
                             END of Functions to draw Scenes
@@ -516,3 +553,4 @@ draw = function() {
        drawPickAndFill(); 
     }
 };
+
