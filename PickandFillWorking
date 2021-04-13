@@ -1,0 +1,93 @@
+var currentColor = color(0, 0, 0); 
+
+//have to use if statement to give priority to shape you're in
+
+//frame for each activity
+var frameX = 100;
+var frameY = 90;
+var frameH = 100;
+var frameW = 100;
+//frame code for each activity
+var drawingFrame = function(){
+    noFill();
+    stroke(171, 171, 171);
+    strokeWeight(15);
+    rect(frameX - 73, frameY, frameH + 240, frameW + 175);
+    stroke(74, 74, 74);
+    strokeWeight(15);
+    rect(frameX - 59, frameY + 15, frameH + 213, frameW + 145);
+    noStroke();
+};
+
+var Rectangle = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 150;
+    this.height = config.height || 50;
+    this.label = config.label;
+    //default to white
+    this.fill = config.fill;
+    this.onClick = function() 
+    {
+        currentColor = this.fill;
+        println("hi");
+    };
+};
+
+Rectangle.prototype.draw = function() {
+    rect(this.x, this.y, this.width, this.height);
+    strokeWeight(1);
+};
+//something here may be wrong
+Rectangle.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+};
+
+Rectangle.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()) {
+        this.onClick();
+    }
+};
+
+var houseRectangle = new Rectangle({
+    x: 220,
+    y: 177,
+    width: 106,
+    height: 98,
+    //label: "Options",
+    onClick: function() {
+        //look at this more
+        this.fill = color(84, 37, 37);
+    }
+});
+
+var windowRectangle = new Rectangle({
+    x: 230,
+    y: 200,
+    width: 25,
+    height: 25,
+    //label: "Options",
+    onClick: function() {
+        this.fill = color(189, 45, 45);
+    }
+});
+
+mouseReleased = function() {
+    if (windowRectangle.isMouseInside()){
+        fill(0, 0, 0);
+        println("window");
+    }
+    else if(houseRectangle.isMouseInside()){
+            fill(currentColor);
+            println("house");
+        }
+};
+
+draw = function() { 
+    houseRectangle.draw();
+    windowRectangle.draw();
+    drawingFrame();
+};
