@@ -1,0 +1,886 @@
+//Global Variables
+var currentColor = color(0, 0, 0); 
+var numColors = 12; //The amount of colors we will have
+/*
+        Scenes
+    0- splash screen
+    1- options
+    2- help
+    3- Cake Decorating
+    4- free draw
+    5- Pick and Fill house
+    6- Fresh Fruit
+    7- Instructions(1),(2),(3),&(4)
+        different instruction scenes for each activity
+    10- instructions for cake decorating
+    11- instructions for free draw
+    12- instructions for fresh fruit
+    13- instructions for pick and fill
+*/
+var currentScene = 0;
+/*
+                            END of Global Variables
+                            START of Bitmoji Code
+*/
+//Leah Bitmoji Code
+var drawBitmojiHeadL=function (bitmojiX, bitmojiY,bitmojiH) {
+    
+    var p = bitmojiH/100; //proprotion for hardcoded numbers
+
+    noStroke();
+    fill(69, 33, 21);//haircolor
+    arc(bitmojiX+100*p, bitmojiY+173*p, 153*p, 322*p, -162, -5);//base of hair
+    arc(bitmojiX+100*p, bitmojiY+196*p, 190*p, 219*p, -166, -11);//2nd layer of hair
+    fill(0, 0, 0);//color of turtleneck-neck-back
+    quad(bitmojiX+58*p,bitmojiY+197*p,bitmojiX+134*p,bitmojiY+202*p,bitmojiX+156*p,bitmojiY+166*p,bitmojiX+55*p,bitmojiY+146*p);//turtleneck-neck-back
+    fill (214, 167, 135); //neck skintone
+    rect(bitmojiX+69*p,bitmojiY+110*p,63*p,65*p);//neck
+    fill (255, 217, 191); //skintone
+    ellipse(bitmojiX+100*p,bitmojiY+115*p,84*p,94*p); // base head shape
+    ellipse(bitmojiX+75*p,bitmojiY+110*p,40*p,67*p); // left cheek shape
+    ellipse(bitmojiX+125*p,bitmojiY+110*p,40*p,67*p); // right cheek shape
+    ellipse(bitmojiX+100*p,bitmojiY+81*p,89*p,93*p); //upper head shape
+    
+    
+    noFill();//effects headband
+    
+    stroke(166, 166, 166);// headband color
+    strokeWeight(12*p);//headband width
+    arc(bitmojiX+100*p, bitmojiY+73*p, 91*p, 95*p, -166, -8);//headband
+    
+    stroke(158, 114, 100);//eyebrow color
+    strokeWeight(5*p);//eyebrow lines thickness
+    arc(bitmojiX+77*p, bitmojiY+84*p, 30*p, 9*p, -186, -49);//left eyebrow
+    arc(bitmojiX+123*p, bitmojiY+84*p, 30*p, 9*p, -130, 9);//right eyebrow
+    
+    noStroke(); 
+    fill(242, 242, 242);//whites of eyes
+    ellipse(bitmojiX+78*p,bitmojiY+94*p,22*p,12*p);//left eye white
+    ellipse(bitmojiX+120*p,bitmojiY+94*p,22*p,12*p);//right eye white
+    fill(101, 107, 49);//eyecolor
+    ellipse(bitmojiX+78*p,bitmojiY+94*p,11*p,11*p);//left iris
+    ellipse(bitmojiX+120*p,bitmojiY+94*p,11*p,11*p);//right iris
+    fill(0, 0, 0);//pupil color
+    ellipse(bitmojiX+78*p,bitmojiY+94*p,6*p,6*p);//left pupil
+    ellipse(bitmojiX+120*p,bitmojiY+94*p,6*p,6*p);//right pupil
+    
+    noFill();//front parts of hair and eyelids don't need fill
+    stroke(247, 173, 151);//eyelid color
+    strokeWeight (4*p);//eyelid thickness
+    arc(bitmojiX+78*p, bitmojiY+93*p, 24*p, 11*p, -180, -32);//left eyelid
+    arc(bitmojiX+121*p, bitmojiY+93*p, 24*p, 11*p, -154, 0);//right eyelid
+    stroke(0, 0, 0);//eyelash color
+    strokeWeight(2*p);//eyelash thickness
+    arc(bitmojiX+78*p, bitmojiY+95*p, 24*p, 11*p, -161, -18);//left eyelash
+    arc(bitmojiX+121*p, bitmojiY+95*p, 24*p, 11*p, -171, -13);//right eyelash
+    
+    strokeWeight(10*p);// front hair pieces thickness
+    stroke(69, 33, 21);//haircolor
+    arc(bitmojiX+100*p, bitmojiY+102*p, 108*p, 129*p, -170, -80);//left front hair
+    arc(bitmojiX+118*p, bitmojiY+109*p, 64*p, 135*p, -83, -16);//right front hair
+    noStroke();
+    
+    noFill(); //smile line does not need fill
+    stroke(230, 182, 170);// smile line color
+    strokeWeight(1*p);//smile line thickness
+    arc(bitmojiX+100*p, bitmojiY+131*p, 45*p, 13*p, -9, 190);//smile line of lip
+    noStroke();
+    
+    fill(242, 155, 131);// top lip color
+    arc(bitmojiX+100*p, bitmojiY+136*p, 37*p, 8*p, -180, 1);//top lip
+    ellipse(bitmojiX+95*p,bitmojiY+136*p,14*p,10*p);//left of top lip
+    ellipse(bitmojiX+105*p,bitmojiY+136*p,14*p,10*p);//right of top lip
+    fill(247, 173, 151);// bottom lip color and nose color
+    arc(bitmojiX+100*p, bitmojiY+135*p, 30*p, 15*p, 2, 180);//bottom lip
+    
+    
+    arc(bitmojiX+100*p, bitmojiY+116*p, 25*p, 11*p, -22, 203);//nose
+    fill(247, 232, 222);//nosebridge color
+    triangle(bitmojiX+106*p,bitmojiY+114*p,bitmojiX+94*p,bitmojiY+114*p,bitmojiX+100*p,bitmojiY+84*p);//nosebridge;
+};
+var drawBitmojiBodyL = function (bitmojiX, bitmojiY, bitmojiH){
+    
+    var p = bitmojiH/100; //proprotion for hardcoded numbers
+   
+    noStroke();
+    fill(36, 35, 36);//body of sweater color
+    rect(bitmojiX+15*p,bitmojiY+215*p,174*p,45*p);//body of sweater
+    rect(bitmojiX+67*p,bitmojiY+192*p,71*p,68*p);//chest of sweater
+    ellipse(bitmojiX+55*p,bitmojiY+222*p,82*p,72*p);//left shoulder
+    ellipse(bitmojiX+148*p,bitmojiY+222*p,82*p,72*p);//right shoulder
+    
+    noFill();//fill not needed for initials
+    stroke(242, 196, 245);//color of initials
+    strokeWeight(7*p);//letter thickness
+    line(bitmojiX+79*p,bitmojiY+239*p,bitmojiX+79*p,bitmojiY+208*p);//left side of L
+    line(bitmojiX+79*p,bitmojiY+239*p,bitmojiX+101*p,bitmojiY+239*p);//right side of L
+    arc(bitmojiX+125*p, bitmojiY+215*p, 25*p, 16*p, -272, -23);//top of S
+    arc(bitmojiX+125*p, bitmojiY+231*p, 25*p, 16*p, -429, -216);//bottom of S
+    noStroke();//not needed anymore after initials
+    fill (36, 35, 36);//color of turtleneck front
+    quad(bitmojiX+58*p,bitmojiY+197*p,bitmojiX+134*p,bitmojiY+204*p,bitmojiX+152*p,bitmojiY+174*p,bitmojiX+54*p,bitmojiY+146*p);//turtleneck-neck-front
+    fill(0, 0, 0);//sweater texture color
+    rect(bitmojiX+62*p,bitmojiY+149*p,5*p,47*p);//sweater texture 1
+    rect(bitmojiX+76*p,bitmojiY+154*p,5*p,44*p);//sweater texture 2
+    rect(bitmojiX+90*p,bitmojiY+158*p,5*p,42*p);//sweater texture 3
+    rect(bitmojiX+105*p,bitmojiY+162*p,5*p,39*p);//sweater texture 4
+    rect(bitmojiX+121*p,bitmojiY+167*p,5*p,35*p);//sweater texture 5
+
+};
+//Function that draws the whole bitmoji
+var drawBitmojiL= function (bitmojiX,bitmojiY,bitmojiH){
+    drawBitmojiHeadL (bitmojiX,bitmojiY,bitmojiH);
+    drawBitmojiBodyL (bitmojiX,bitmojiY,bitmojiH);
+};
+
+//Stephanie Bitmoji Code
+var drawBitmojiHead = function(bitmojiX, bitmojiY, bitmojiH) {
+    noStroke();
+    fill(252, 234, 214); 
+    ellipse(bitmojiX, bitmojiY, 78 * bitmojiH / 150, 82 * bitmojiH / 150); //head
+    fill(181, 255, 196, 0.5);
+    arc(bitmojiX - 35 * bitmojiH / 150, bitmojiY + 39 * bitmojiH / 150, 27 *              bitmojiH / 150, 53 * bitmojiH / 150, 0, 361); //left cheekbone
+    arc(bitmojiX + 37 * bitmojiH / 150, bitmojiY + 39 * bitmojiH / 150, 27                * bitmojiH / 150, 53 * bitmojiH / 150, 0, 361); //right cheekbone
+    fill(112, 53, 53);   
+    quad(bitmojiX - 61 * bitmojiH / 150, bitmojiY + 51 * bitmojiH / 150, bitmojiX         - 34 * bitmojiH / 150, bitmojiY - 35 * bitmojiH / 150, bitmojiX - 19              * bitmojiH / 150, bitmojiY - 45 * bitmojiH / 150, bitmojiX - 31 * bitmojiH          / 150, bitmojiY + 51 * bitmojiH / 150);//left hair
+    quad(bitmojiX + 65 * bitmojiH / 150, bitmojiY + 51 * bitmojiH / 150, bitmojiX         + 30 * bitmojiH / 150, bitmojiY - 40 * bitmojiH / 150, bitmojiX + 21 *            bitmojiH/ 150, bitmojiY - 45 * bitmojiH / 150, bitmojiX + 33 * bitmojiH /         150, bitmojiY + 48* bitmojiH / 150); //right hair
+    ellipse(bitmojiX + (bitmojiH / 150), bitmojiY - (bitmojiH / 150 * 37), 62 *            bitmojiH / 150, 28 * bitmojiH / 150);//top hair
+    rect(bitmojiX - 31 * bitmojiH / 150, bitmojiY - 37 * bitmojiH / 150, 59 *             bitmojiH / 150, 18 * bitmojiH / 150); //forehead hair
+//headband
+    noFill();
+    strokeWeight(5);
+    stroke(0, 0, 0);
+    arc(bitmojiX + (bitmojiH / 150 * 0), bitmojiY - (bitmojiH / 150 * 28), 71 *           bitmojiH / 150, 16 * bitmojiH / 150, 178, 371);//headband
+    strokeWeight(2);
+    triangle(bitmojiX + 27 * bitmojiH / 150, bitmojiY - 53 * bitmojiH / 150,          bitmojiX + 32 * bitmojiH / 150, bitmojiY - 33 * bitmojiH / 150, bitmojiX + 11         * bitmojiH / 150, bitmojiY - 38 * bitmojiH / 150); //right ear
+    triangle(bitmojiX - 24 * bitmojiH / 150, bitmojiY - 53 * bitmojiH / 150,          bitmojiX - 29 * bitmojiH / 150, bitmojiY - 33 * bitmojiH /150, bitmojiX - 9 *     bitmojiH / 150, bitmojiY - 38 * bitmojiH / 150); //left ear
+    strokeWeight(1);
+//glasses
+    fill(252, 234, 214); //skin color 
+    rect(bitmojiX-20*bitmojiH/150,bitmojiY-9*bitmojiH/150,19*bitmojiH/150,14              *bitmojiH/150); // left
+    rect(bitmojiX+4*bitmojiH/150,bitmojiY-9*bitmojiH/150,19*bitmojiH/150,14               *bitmojiH/150); // right
+    line(bitmojiX-1*bitmojiH/150,bitmojiY-2*bitmojiH/150,bitmojiX+3*bitmojiH              /150,bitmojiY-2*bitmojiH/150); // bridge
+    line(bitmojiX-26*bitmojiH/150,bitmojiY-2*bitmojiH/150,bitmojiX-21*bitmojiH            /150,bitmojiY-2*bitmojiH/150); //left line
+    line(bitmojiX+24*bitmojiH/150,bitmojiY-2*bitmojiH/150,bitmojiX+26*bitmojiH            /150,bitmojiY-2*bitmojiH/150); //right line
+//eyes
+    fill(255, 255, 255);
+    arc(bitmojiX + 16 * bitmojiH / 150, bitmojiY - 2 * bitmojiH / 150, 20 *               bitmojiH / 150, 9 * bitmojiH / 150, 1, 376); //right
+    arc(bitmojiX - 10 * bitmojiH / 150, bitmojiY - 2 * bitmojiH / 150, 20 *               bitmojiH / 150, 9 * bitmojiH / 150, 1, 376); //left
+    fill(112, 53, 53);
+    ellipse(bitmojiX - 10 * bitmojiH / 150, bitmojiY - 2 * bitmojiH / 150, 8 *            bitmojiH / 150, 6 * bitmojiH / 150); // left
+    ellipse(bitmojiX + 16 * bitmojiH / 150, bitmojiY - 2 * bitmojiH / 150, 8 *            bitmojiH / 150, 6 * bitmojiH / 150); //right
+//mouth
+    noFill();
+    arc(bitmojiX + 1 * bitmojiH / 150, bitmojiY + 8 * bitmojiH / 150, 57 *                bitmojiH / 150, 41 * bitmojiH / 150, 51, 120); //smile
+    fill(255, 178, 201);
+    arc(bitmojiX + 3 * bitmojiH / 150, bitmojiY + 29 * bitmojiH / 150, 23 *               bitmojiH / 150, 7 * bitmojiH / 150, -173, 190); //top
+    arc(bitmojiX + 3 * bitmojiH / 150, bitmojiY + 29 * bitmojiH / 150, 20 *               bitmojiH / 150, 9 * bitmojiH / 150, 1, 190); //bottom
+    line(bitmojiX - 10 * bitmojiH / 150, bitmojiY + 28 * bitmojiH / 150, bitmojiX         + 13 * bitmojiH / 150, bitmojiY + 30 * bitmojiH / 150); 
+//nose
+    fill(252, 234, 214);
+    stroke(0, 0, 0);
+    arc(bitmojiX + 2 * bitmojiH / 150, bitmojiY + 13 * bitmojiH / 150, 9 *                bitmojiH / 150, 9 * bitmojiH / 150, -28, 177);
+};
+var drawBitmojiBody = function(bitmojiX,bitmojiY,bitmojiH){
+//neck
+    noStroke();
+    fill(252, 234, 214);
+    rect(bitmojiX - 12 * bitmojiH / 150, bitmojiY + 37 * bitmojiH / 150, 26               * bitmojiH / 150, 16 * bitmojiH / 150);
+//shirt
+    fill(0, 0, 0);
+    rect(bitmojiX - 23 * bitmojiH / 150, bitmojiY + 52 * bitmojiH / 150, 50               * bitmojiH / 150, 41 * bitmojiH / 150, 12 * bitmojiH / 150);
+    rect(bitmojiX - 42 * bitmojiH / 150, bitmojiY + 52 * bitmojiH / 150, 25               * bitmojiH / 150, 41 * bitmojiH / 150, 14 * bitmojiH / 150); 
+    rect(bitmojiX + 19 * bitmojiH / 150, bitmojiY + 52 * bitmojiH / 150, 25               * bitmojiH / 150, 41 * bitmojiH / 150, 14 * bitmojiH / 150);
+    rect(bitmojiX - 42 * bitmojiH / 150, bitmojiY + 75 * bitmojiH / 150, 86               * bitmojiH / 150, 20 * bitmojiH / 150);
+    stroke(255, 255, 255);
+    line(bitmojiX - 18 * bitmojiH / 150, bitmojiY + 65 * bitmojiH / 147, bitmojiX         - 18 * bitmojiH / 150, bitmojiY + 95 * bitmojiH / 150);
+    line(bitmojiX + 23 * bitmojiH / 150, bitmojiY + 63 * bitmojiH / 150, bitmojiX         + 23 * bitmojiH / 150, bitmojiY + 95 * bitmojiH / 150);
+//initials
+    fill(255, 255, 255);
+    textSize(25 * bitmojiH / 150);
+    text("SP", bitmojiX - 13 * bitmojiH / 150, bitmojiY + 68 * bitmojiH / 150);
+};
+var drawBitmoji = function (bitmojiX, bitmojiY, bitmojiH){
+    
+    drawBitmojiHead(bitmojiX, bitmojiY, bitmojiH);
+    drawBitmojiBody(bitmojiX, bitmojiY, bitmojiH);
+};
+var myBitmoji = function(characterX, characterY){
+    drawBitmoji(characterX, characterY, 100);
+   // noFill();
+   // rect(59, 60, 85, 102);
+};
+
+/*
+                            END of Bitmoji Code
+                            START of Button Object Code
+*/
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 150;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+    this.onClick = config.onClick || function() {};
+};
+
+Button.prototype.draw = function() {
+    fill(252, 166, 156);
+    noStroke();
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(255, 255, 255);
+    textSize(21);
+    textAlign(LEFT, TOP);
+    text(this.label, this.x+7, this.y+this.height/4);
+    textAlign(LEFT, LEFT);
+    strokeWeight(1);
+};
+
+Button.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+};
+
+Button.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()) {
+        this.onClick();
+    }
+};
+//Activities Button
+var activitiesButton = new Button({
+    x: 20,
+    y: 335,
+    width: 94,
+    label: "Activities",
+    onClick: function() {
+        currentScene = 1;
+        background(255, 255, 255);
+    }
+});
+//Start button
+var startButton = new Button({
+    x: 139,
+    y: 335,
+    width: 141,
+    label: "Play Through",
+    onClick: function() {
+        currentScene = 6;
+        background(255, 255, 255);
+    }
+});
+//Help button
+var helpButton = new Button({
+    x: 308,
+    y: 335,
+    width: 67,
+    label: "Help",
+    onClick: function() {
+        if (currentScene === 0)
+        {
+            currentScene = 2;
+            background(255, 255, 255);
+        }else if (currentScene === 2)
+        {
+            currentScene = 0;
+        }else if (currentScene === 10 ||currentScene === 11||currentScene === 12||currentScene === 13)
+        {
+            currentScene = 2;
+        }
+    }
+});
+
+//Cake Decor Button
+var cakeDecorButton = new Button({
+    x: 49,
+    y: 230,
+    width: 140,
+    label: "Frost a Cake",
+    onClick: function() {
+        currentScene = 3;
+        background(255, 255, 255);
+    }
+});
+//Free Draw Button
+var freeDrawButton = new Button({
+    x: 216,
+    y: 159,
+    width: 120,
+    label: "Free Draw",
+    onClick: function() {
+        currentScene = 4;
+        background(255, 255, 255);
+    }
+});
+//Fresh Fruit Button
+var freshFruitButton = new Button({
+    x: 216,
+    y: 230,
+    width: 120,
+    label: "Fresh Fruit",
+    onClick: function() {
+        currentScene = 5;
+        background(255, 255, 255);
+    }
+});
+//Pick and Fill House Button
+var pickFillButton = new Button({
+    x: 51,
+    y: 159,
+    width: 120,
+    label: "Pick & Fill",
+    onClick: function() {
+        currentScene = 6;
+        background(255, 255, 255);
+    }
+});
+
+//Instruction code
+// Frost a Cake button for instructions
+var cakeDecorInst = new Button({
+    x: 49,
+    y: 230,
+    width: 140,
+    label: "Frost a Cake",
+    onClick: function() {
+        currentScene = 10;
+    }
+});
+//Free Draw Button for instructions
+var freeDrawInst = new Button({
+    x: 216,
+    y: 159,
+    width: 120,
+    label: "Free Draw",
+    onClick: function() {
+        currentScene = 11;
+    }
+});
+//Fresh Fruit Button for instructions
+var freshFruitInst = new Button({
+    x: 216,
+    y: 230,
+    width: 120,
+    label: "Fresh Fruit",
+    onClick: function() {
+        currentScene = 12;
+    }
+});
+//Pick and Fill House Button for instructions
+var pickFillInst = new Button({
+    x: 51,
+    y: 159,
+    width: 120,
+    label: "Pick & Fill",
+    onClick: function() {
+        currentScene = 13;
+    }
+});
+/*
+                            END of Button Object Code
+                            START of Crayon Object Code
+*/
+// Array to store colors
+var colorArray = [
+    color(255, 0, 0), //1 Red
+    color(242, 145, 236), //2 Pink
+    color(255, 162, 0), //3 Orange
+    color(255, 255, 0), //4 Yellow
+    color(108, 217, 112), //5 Light Green
+    color(13, 117, 13), //6 Dark Green
+    color(148, 231, 242), //7 Sky Blue
+    color(0, 85, 255), //8 Dark Blue
+    color(164, 51, 230), //9 Purple
+    color(117, 60, 17), //10 Brown
+    color(255, 255, 255), //11 White
+    color(0, 0, 0), //12 Black
+    ];
+//Empty Array to make the color button instances
+var colorCrayons = [];
+
+var Crayon = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 150;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+    this.fill = config.fill;
+    this.onClick = function() 
+    {
+        currentColor = this.fill;
+    };
+};
+
+Crayon.prototype.draw = function() {
+    noStroke();
+    //this.fill will make each button their assigned array color
+    fill(this.fill);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(19);
+    textAlign(LEFT, TOP);
+    //text(this.label, this.x+7, this.y+this.height - 28);
+    textAlign(LEFT, LEFT);
+    fill(this.fill);
+    triangle(this.x + 14, this.y + 80, this.x + 29, this.y + 64, this.x, this.y + 64);
+};
+
+Crayon.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+};
+
+Crayon.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()) {
+        this.onClick();
+    }
+};
+
+//a loop that will push new instances of the button object into the colorCrayons array
+for( var i = 0; i < numColors; i++)
+{
+    colorCrayons.push(
+        new Crayon (
+            {
+                x:4 + i * 33,
+                y:-15,
+                fill: colorArray[i],
+                width: 29,
+                height: 65
+            }
+        )
+    );
+}
+
+/*
+                            END of Crayon Object Code
+                            START of pick and fill shape code
+*/
+/*
+var Rectangle = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 150;
+    this.height = config.height || 50;
+    this.label = config.label;
+    this.fill = config.fill;
+    this.onClick = function() 
+    {
+        currentColor = this.fill;
+    };
+};
+
+Rectangle.prototype.draw = function() {
+    //fill(255, 26, 0);
+    rect(this.x, this.y, this.width, this.height, 5);
+   // fill(255, 255, 255);
+    //textSize(21);
+    //textAlign(LEFT, TOP);
+    //text(this.label, this.x+10, this.y+this.height/4);
+    //textAlign(LEFT, LEFT);
+    strokeWeight(1);
+};
+
+Rectangle.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+};
+
+Rectangle.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()) {
+        this.onClick();
+    }
+};
+
+var rectangle = new Rectangle({
+    x: 100,
+    y: 238,
+    width: 94,
+    //label: "Activities",
+    onClick: function() {
+        this.fill = color(84, 37, 37);
+    }
+});
+
+mouseReleased = function() {
+    fill(255, 0, 0);
+    ellipse(mouseX, mouseY, 20, 20);
+    rectangle.handleMouseClick();
+};/*
+
+/*                          
+                            END of pick and fill shape code
+                            START of back, ? and next "buttons"
+*/
+var GameNavigation = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 150;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+    this.onClick = config.onClick || function() {};
+};
+
+GameNavigation.prototype.draw = function() {
+    textAlign(CENTER, CENTER);
+    fill(184, 184, 184);
+    noStroke();
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(255, 255, 255);
+    textSize(12);
+    text(this.label, this.x+21, this.y+this.height - 10);
+    textAlign(LEFT, LEFT);
+    strokeWeight(1);
+};
+
+GameNavigation.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+};
+
+GameNavigation.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()) {
+        this.onClick();
+    }
+};
+
+var backNav = new GameNavigation({
+    x: 4,
+    y: 377,
+    width: 43,
+    height: 19,
+    label: "back",
+    onClick: function() {
+        currentScene = currentScene - 1;
+    }
+});
+var helpNav = new GameNavigation({
+    x: 174,
+    y: 377,
+    width: 43,
+    height: 19,
+    label: "?",
+    onClick: function() {
+        currentScene = 1;
+    }
+});
+var nextNav = new GameNavigation({
+    x: 353,
+    y: 377,
+    width: 43,
+    height: 19,
+    label: "next",
+    onClick: function() {
+        currentScene = 1;
+    }
+});
+
+/*
+                            END of back, ? and next "buttons"
+                            START of Functions to draw Scenes
+*/
+//scene 0 is splash screen
+var drawSplashScreen = function(){
+    background(255, 180, 173);
+    textSize(55);
+    fill(252, 252, 252);
+    text("Let's Draw", 69, 77);
+    activitiesButton.draw();
+    startButton.draw();
+    helpButton.draw();
+    drawBitmoji(111,219,133);
+    drawBitmojiL(230,165,54);
+    fill(255, 255, 255);
+    textSize(14);
+    text("Stephanie Poncin", 60,320);
+    text("Leah Struminsky", 234,320);
+};
+
+//frame for each activity
+var frameX = 100;
+var frameY = 90;
+var frameH = 100;
+var frameW = 100;
+//frame code for each activity
+var drawingFrame = function(){
+    noFill();
+    stroke(171, 171, 171);
+    strokeWeight(15);
+    rect(frameX - 73, frameY, frameH + 240, frameW + 175);
+    stroke(74, 74, 74);
+    strokeWeight(15);
+    rect(frameX - 59, frameY + 15, frameH + 213, frameW + 145);
+    noStroke();
+};
+//scene 1 is activities
+var drawactivities = function(){
+    background(255, 180, 173);
+    textSize(55);
+    fill(252, 252, 252);
+    text("Activities", 96, 60);
+    textSize(19);
+    text("Select the activity you want to try below:", 33, 98);
+    freeDrawButton.draw();
+    cakeDecorButton.draw();
+    freshFruitButton.draw();
+    pickFillButton.draw();
+    activitiesButton.draw();
+    startButton.draw();
+    helpButton.draw();
+};
+//Draw help scene
+var drawHelp = function(){
+    background(255, 180, 173);
+    textSize(55);
+    fill(252, 252, 252);
+    text("Help", 144, 60);
+    textSize(19);
+    text("Select the activity you need instructions for:", 16, 98);
+    freeDrawInst.draw();
+    cakeDecorInst.draw();
+    freshFruitInst.draw();
+    pickFillInst.draw();
+    activitiesButton.draw();
+    startButton.draw();
+    helpButton.draw();
+};
+//instruction pages
+var drawPickAndFillInst = function(){
+    background(255, 180, 173);
+    textAlign(CENTER, CENTER);
+    textSize(55);
+    fill(255, 255, 255);
+    text("Pick and Fill", 196, 47);
+    textSize(16);
+    text("Click on one of the crayons to pick your color.", 200, 110);
+    text("Click in a shape to fill it with your selected color.", 200, 150);
+    text("Use the white crayon to erase if you make a mistake.", 200, 190);
+    text("Click the help button to return to the previous screen.", 200, 230);
+    //text("Click the next button to go to the next activity.", 16, 98);
+    //text("Click the ? button to read these instructions again.", 200, 270);
+    activitiesButton.draw();
+    startButton.draw();
+    helpButton.draw();
+    currentScene = 13;
+    textAlign(LEFT, LEFT);
+};
+var drawFreshFruitInst = function(){
+    background(255, 180, 173);
+    textAlign(CENTER, CENTER);
+    textSize(55);
+    fill(255, 255, 255);
+    text("Fresh Fruit", 196, 47);
+    textSize(16);
+    text("Click on one of the crayons to pick your color.", 200, 110);
+    text("Click in a shape to fill it with your selected color.", 200, 150);
+    text("Try to color the fruits to their proper colors!", 200, 190);
+    text("Use the white crayon to erase if you make a mistake.", 200, 230);
+    text("Click the help button to return to the previous screen.", 200, 270);
+    //text("Click the next button to go to the next activity.", 16, 98);
+    //text("Click the ? button to read these instructions again.", 200, 270);
+    activitiesButton.draw();
+    startButton.draw();
+    helpButton.draw();
+    currentScene = 12;
+    textAlign(LEFT, LEFT);
+};
+var drawCakeDecorInst = function(){
+    background(255, 180, 173);
+    textAlign(CENTER, CENTER);
+    textSize(55);
+    fill(255, 255, 255);
+    text("Frost A Cake", 196, 47);
+    textSize(16);
+    text("Click on one of the crayons to pick your color.", 200, 110);
+    text("Click and drag your mouse to draw.", 200, 150);
+    text("Use the white crayon to erase if you make a mistake.", 200, 190);
+    text("Click the help button to return to the previous screen.", 200, 230);
+    //text("Click the next button to go to the next activity.", 16, 98);
+    //text("Click the ? button to read these instructions again.", 200, 270);
+    activitiesButton.draw();
+    startButton.draw();
+    helpButton.draw();
+    currentScene = 10;
+    textAlign(LEFT, LEFT);
+};
+var drawFreeDrawInst = function(){
+    background(255, 180, 173);
+    textAlign(CENTER, CENTER);
+    textSize(55);
+    fill(255, 255, 255);
+    text("Free Draw", 196, 47);
+    textSize(16);
+    text("Click on one of the crayons to pick your color.", 200, 110);
+    text("Click and drag your mouse to draw.", 200, 150);
+    text("Use the white crayon to erase if you make a mistake.", 200, 190);
+    text("Click the help button to return to the previous screen.", 200, 230);
+    //text("Click the next button to go to the next activity.", 16, 98);
+    //text("Click the ? button to read these instructions again.", 200, 270);
+    activitiesButton.draw();
+    startButton.draw();
+    helpButton.draw();
+    currentScene = 11;
+    textAlign(LEFT, LEFT);
+};
+//draw the buttons for the Free Draw screen using a loop
+var drawColorCrayons = function(){
+    for (var i = 0; i < numColors; i++)
+    {
+        //draw out the array of buttons
+        colorCrayons[i].draw();
+    }
+    //drawingFrame();
+};
+//scene 4 is free draw
+var drawFreeDraw = function(){
+   // background(255, 255, 255);
+    drawColorCrayons();
+    drawingFrame();
+    currentScene = 4;
+    backNav.draw();
+    helpNav.draw();
+    nextNav.draw();
+};
+//scene 3 is cake
+var drawCakeDecorating = function(){
+    //background(255, 255, 255);
+    fill(0, 0, 0);
+    text("cake", 100,100);
+    drawingFrame();
+    currentScene = 3;
+    drawColorCrayons();
+    backNav.draw();
+    helpNav.draw();
+    nextNav.draw();
+};
+//scene 6 is house
+var drawPickAndFill = function(){
+    //background(255, 255, 255);
+    fill(0, 0, 0);
+    text("house", 100,100);
+    drawingFrame();
+    currentScene = 6;
+    drawColorCrayons();
+    backNav.draw();
+   // rectangle.draw();
+    helpNav.draw();
+    nextNav.draw();
+};
+//scene 5 is Fruit
+var drawFreshFruit = function(){
+    //background(255, 255, 255);
+    fill(0, 0, 0);
+    text("fruit", 100,100);
+    drawingFrame();
+    currentScene = 5;
+    drawColorCrayons();
+    backNav.draw();
+    helpNav.draw();
+    nextNav.draw();
+};
+/*
+                            END of Functions to draw Scenes
+*/
+
+//Mouse Clicked function to operate the buttons
+mouseClicked = function() 
+{
+    if (currentScene === 0 || currentScene === 13 || currentScene === 12 || currentScene === 11 || currentScene === 10){
+        activitiesButton.handleMouseClick();
+        helpButton.handleMouseClick();
+        startButton.handleMouseClick();
+    }
+    else if (currentScene === 1){
+        
+        activitiesButton.handleMouseClick();
+        helpButton.handleMouseClick();
+        startButton.handleMouseClick();
+        freeDrawButton.handleMouseClick();
+        freshFruitButton.handleMouseClick();
+        cakeDecorButton.handleMouseClick();
+        pickFillButton.handleMouseClick();
+    }
+    else if (currentScene === 2){
+        
+        activitiesButton.handleMouseClick();
+        helpButton.handleMouseClick();
+        startButton.handleMouseClick();
+        freeDrawInst.handleMouseClick();
+        freshFruitInst.handleMouseClick();
+        cakeDecorInst.handleMouseClick();
+        pickFillInst.handleMouseClick();
+    }
+    else if (currentScene === 3 || currentScene === 4 || currentScene === 5 || currentScene === 6){
+        for( var i = 0; i < numColors; i++)
+        {
+            colorCrayons[i].handleMouseClick();
+        }
+    }
+    else if (currentScene === 1){
+        freeDrawButton.handleMouseClick();
+        freshFruitButton.handleMouseClick();
+        cakeDecorButton.handleMouseClick();
+        pickFillButton.handleMouseClick();
+    }
+    
+    else if (currentScene === 3 || currentScene === 4 || currentScene === 5 || currentScene === 6){
+        helpNav.draw();
+        nextNav.draw();
+    }
+};
+
+
+
+//Dragged function to draw on the screen
+mouseDragged = function() {
+    //if current scene is not scene 6 then do below if statement
+    if(mouseY > 100 && mouseY < 350 && mouseX > 30 && mouseX < 350){
+        fill(currentColor);
+        noStroke();
+        ellipse(mouseX, mouseY, 20, 20);
+        strokeWeight(1);
+    }
+};
+// The draw function
+draw = function() {
+    if (currentScene === 0){
+        drawSplashScreen();
+    }
+    else if (currentScene === 1){ 
+       drawactivities(); 
+    }
+    else if (currentScene === 2){ 
+       drawHelp(); 
+    }
+    else if (currentScene === 3){ 
+       drawCakeDecorating(); 
+    }
+    else if (currentScene === 4){
+       drawFreeDraw(); 
+    }
+    else if (currentScene === 5){
+       drawFreshFruit(); 
+    }
+    else if (currentScene === 6){
+       drawPickAndFill(); 
+    }
+    else if (currentScene === 13){
+        drawPickAndFillInst();
+    }
+    else if (currentScene === 12){
+        drawFreshFruitInst();
+    }
+    else if (currentScene === 10){
+    drawCakeDecorInst();
+    }
+    else if (currentScene === 11){
+    drawFreeDrawInst();
+    }
+};
